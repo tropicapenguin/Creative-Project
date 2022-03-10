@@ -7,7 +7,7 @@ Created on Wed Mar  2 11:12:50 2022
 from kivy.clock import Clock
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.graphics import Color, Ellipse, Line
+from kivy.graphics import Color, Ellipse, Line, Rectangle
 from kivy.uix.widget import Widget
 
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -25,9 +25,13 @@ class SecondWindow(Screen):
         
     def on_enter(self, **kwargs):
         Clock.schedule_once(self.Next, 20)
+        with self.canvas:
+            Color(.2, .5, .5)
+            Rectangle(pos=self.pos, size=self.size)
         
     def Next(self, arg):
         self.manager.current = 'three'
+        Clock.schedule_once(self.export, 1)
         
     # On mouse press how Paint_brush behave
     def on_touch_down(self, touch):
@@ -41,11 +45,10 @@ class SecondWindow(Screen):
     def on_touch_move(self, touch):
         touch.ud['line'].points += [touch.x, touch.y]
         
-    def on_leave(self, **kwargs):
-        image = self.export_as_image()
-        image.save('ImageTrial'+Global.TrialNum+'.png')
-        self.canvas.clear()
-     
+    def export(self, dt):
+        name = 'ImageTrial'+str(Global.TrialNum)+'.png'
+        self.export_as_image().save(name)
+        
 class ThirdWindow(Screen):
     def on_enter(self, **kwargs):
         Clock.schedule_once(self.Next, 10)
@@ -54,14 +57,22 @@ class ThirdWindow(Screen):
     def Next(self, arg):
         self.manager.current = 'main'
         
-class MainManager(ScreenManager):
-    pass
+#class MainManager(ScreenManager):
+#    pass
 
 kv = Builder.load_file("my.kv")
 
+#MainManager.add_widget(MainWindow(name='main'))
+#MainManager.add_widget(SecondWindow(name='second'))
+#MainManager.add_widget(ThirdWindow(name='three'))
+
 class MyMainApp(App):
     def build(self):
-        return MainManager()
+        MainManager = ScreenManager()
+        MainManager.add_widget(MainWindow(name='main'))
+        MainManager.add_widget(SecondWindow(name='second'))
+        MainManager.add_widget(ThirdWindow(name='three'))
+        return MainManager
         
 def endtrial():
     MyMainApp.get_running_app().stop()
