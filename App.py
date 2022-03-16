@@ -9,11 +9,14 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.graphics import Color, Ellipse, Line, Rectangle
 from kivy.uix.widget import Widget
+from PIL import Image
+import imagehash
 
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 class Global():
     TrialNum = 0
+    status = False
 
 class MainWindow(Screen):
     pass
@@ -51,11 +54,14 @@ class SecondWindow(Screen):
         
 class ThirdWindow(Screen):
     def on_enter(self, **kwargs):
+        #print(Global.TrialNum)
+        Clock.schedule_once(compare, 2)
         Clock.schedule_once(self.Next, 10)
-        Global.TrialNum += 1
         
     def Next(self, arg):
         self.manager.current = 'main'
+        Global.TrialNum += 1
+        
         
 #class MainManager(ScreenManager):
 #    pass
@@ -77,6 +83,17 @@ class MyMainApp(App):
 def endtrial():
     MyMainApp.get_running_app().stop()
     #print('worked')
-    
+'''
+the comparing function for between the images
+'''
+def compare(dt):
+    if Global.TrialNum > 0:
+        hash1 = imagehash.average_hash(Image.open('ImageTrial'+str(Global.TrialNum-1)+'.png'))
+        hash2 = imagehash.average_hash(Image.open('ImageTrial'+str(Global.TrialNum)+'.png'))
+        similarity = hash1 - hash2
+        Global.status = True
+        print(similarity)
+    else:
+        print('Nothing to compare')
 if __name__== "__main__":
     MyMainApp().run()
