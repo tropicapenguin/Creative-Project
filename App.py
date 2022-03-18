@@ -11,7 +11,8 @@ from kivy.graphics import Color, Ellipse, Line, Rectangle
 from kivy.uix.widget import Widget
 from PIL import Image
 import imagehash
-
+from kivy.core.window import Window
+Window.fullscreen = True
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 class Global():
