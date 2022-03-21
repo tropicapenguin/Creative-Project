@@ -12,7 +12,7 @@ from kivy.uix.widget import Widget
 from PIL import Image
 import imagehash
 
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 
 class Global():
     TrialNum = 0
@@ -74,7 +74,7 @@ kv = Builder.load_file("my.kv")
 
 class MyMainApp(App):
     def build(self):
-        MainManager = ScreenManager()
+        MainManager = ScreenManager(transition=NoTransition())
         MainManager.add_widget(MainWindow(name='main'))
         MainManager.add_widget(SecondWindow(name='second'))
         MainManager.add_widget(ThirdWindow(name='three'))
