@@ -5,6 +5,7 @@ Created on Wed Mar  2 11:12:50 2022
 @author: rgerritsen
 """
 from kivy.clock import Clock
+from kivy.core.window import Window
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.graphics import Color, Ellipse, Line, Rectangle
@@ -13,6 +14,7 @@ from PIL import Image
 import imagehash
 
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
+Window.fullscreen = "auto"
 
 class Global():
     TrialNum = 0
