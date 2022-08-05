@@ -6,6 +6,7 @@ Created on Wed Mar  2 11:12:50 2022
 """
 from kivy.clock import Clock
 from kivy.core.window import Window
+from kivy.core.audio import SoundLoader
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.graphics import Color, Ellipse, Line, Rectangle
@@ -15,6 +16,8 @@ import imagehash
 
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 Window.fullscreen = "auto"
+
+sound = SoundLoader.load('ding.mp3')
 
 class Global():
     TrialNum = 0
@@ -30,6 +33,7 @@ class SecondWindow(Screen):
         
     def on_enter(self, **kwargs):
         Clock.schedule_once(self.Next, 20)
+        sound.play()
         with self.canvas:
             Color(.2, .5, .5)
             Rectangle(pos=self.pos, size=self.size)
