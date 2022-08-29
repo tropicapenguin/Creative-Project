@@ -35,7 +35,7 @@ class SecondWindow(Screen):
         Clock.schedule_once(self.Next, 20)
         sound.play()
         with self.canvas:
-            Color(.2, .5, .5)
+            Color(0, 0, 0)
             Rectangle(pos=self.pos, size=self.size)
         
     def Next(self, arg):
@@ -45,8 +45,8 @@ class SecondWindow(Screen):
     # On mouse press how Paint_brush behave
     def on_touch_down(self, touch):
         with self.canvas:
-            Color(0, 1, 1)
-            d = 3.
+            Color(1, 1, 1)
+            d = 4.
             Ellipse(pos=(touch.x - d / 2, touch.y - d / 2), size=(d, d))
             touch.ud['line'] = Line(points=(touch.x, touch.y))
         

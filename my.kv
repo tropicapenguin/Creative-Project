@@ -1,6 +1,9 @@
 # Button Screen
 <MainWindow>:
 	name: "main"
+    canvas:
+		Color:
+			rgb: 0, 0, 0
     Button:
     	text: "Start"
     	on_release: app.root.current = "second"
@@ -8,13 +11,16 @@
 # Drawing pad creation         
 <SecondWindow>:
 	name: "second"
+	canvas:
+    	Color:
+        	rgb: 0, 0, 0
             
 # Gap Screen
 <ThirdWindow>:
 	name: "three"
     canvas:
 		Color:
-			rgb: .2, .5, .2
+			rgb: .2, .2, .2
         Rectangle:
             size: root.size
             pos: root.pos
