@@ -12,10 +12,14 @@ from kivy.lang import Builder
 from kivy.graphics import Color, Ellipse, Line, Rectangle
 from kivy.uix.widget import Widget
 from PIL import Image
+import numpy
 import imagehash
+from sewar.full_ref import mse, rmse, psnr, uqi, ssim, ergas, scc, rase, sam, msssim, vifp
 
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 Window.fullscreen = "auto"
+
+Data = []
 
 sound = SoundLoader.load('ding.mp3')
 
@@ -93,13 +97,24 @@ def endtrial():
 the comparing function for between the images
 '''
 def compare(dt):
-    if Global.TrialNum > 0:
-        hash1 = imagehash.average_hash(Image.open('ImageTrial'+str(Global.TrialNum-1)+'.png'))
-        hash2 = imagehash.average_hash(Image.open('ImageTrial'+str(Global.TrialNum)+'.png'))
-        similarity = hash1 - hash2
-        Global.status = True
-        print(similarity)
+    if Global.TrialNum == 0:
+        print("First trial has nothing to compare to so reward for interacting")
     else:
-        print('Nothing to compare')
+        pic1 = Image.open('ImageTrial'+str(Global.TrialNum-1)+'.png')
+        img1 = numpy.array(pic1)
+        pic2 = Image.open('ImageTrial'+str(Global.TrialNum)+'.png')
+        img2 = numpy.array(pic2)
+        print(mse(img1,img2))
+        print(rmse(img1,img2))
+        print(psnr(img1,img2))
+        print(ssim(img1,img2))
+        print(uqi(img1,img2))
+        print(ergas(img1,img2))
+        print(scc(img1,img2))
+        print(rase(img1,img2))
+        print(sam(img1,img2))
+        print(vifp(img1,img2))
+        Global.status = True
+    
 if __name__== "__main__":
     MyMainApp().run()
