@@ -15,9 +15,14 @@ from PIL import Image
 import numpy
 import imagehash
 from sewar.full_ref import mse, rmse, psnr, uqi, ssim, ergas, scc, rase, sam, msssim, vifp
+import RPi.GPIO as GPIO
 
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 Window.fullscreen = "auto"
+
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(18,GPIO.IN)
 
 Data = []
 
@@ -26,9 +31,21 @@ sound = SoundLoader.load('ding.mp3')
 class Global():
     TrialNum = 0
     status = False
+    feedback = False
+    
 
 class MainWindow(Screen):
-    pass
+    def on_enter(self, args):
+        GPIO.setup(18,GPIO.IN)
+        Clock.schedule_interval(self.received)
+    def received(self, arg):
+        if GPIO.input(18):
+            #monitor pin for signal from feeder
+            GPIO.cleanup()
+            self.Next()
+    def Next(self, arg):
+        self.manager.current = 'second'
+        
 
 class SecondWindow(Screen):
     
@@ -48,6 +65,7 @@ class SecondWindow(Screen):
         
     # On mouse press how Paint_brush behave
     def on_touch_down(self, touch):
+        Global.feedback = True
         with self.canvas:
             Color(1, 1, 1)
             d = 4.
@@ -65,10 +83,15 @@ class SecondWindow(Screen):
 class ThirdWindow(Screen):
     def on_enter(self, **kwargs):
         #print(Global.TrialNum)
+        if Global.feedback == True:
+            GPIO.setup(18,GPIO.OUT)
+            GPIO.output(18,GPIO.HIGH)
+            #send signal to feeder to feed
         Clock.schedule_once(compare, 2)
         Clock.schedule_once(self.Next, 10)
         
     def Next(self, arg):
+        GPIO.cleanup()
         self.manager.current = 'main'
         Global.TrialNum += 1
         
