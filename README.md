@@ -1,5 +1,5 @@
 # Creative-Project
-Mouse Drawing App for Narayanan's Lab at the University of Iowa Neurology Department.
+Mouse Drawing App for [Narayanan's Lab](https://narayanan.lab.uiowa.edu/) at the University of Iowa Neurology Department.
 
 # Dependences
 ### Python packages
