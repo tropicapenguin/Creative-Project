@@ -2,7 +2,10 @@
 """
 Created on Wed Mar  2 11:12:50 2022
 
-@author: rgerritsen
+This is the code on the Raspberry pi for running the drawing app.
+
+@author: Robert Gerritsen 
+Email: rgerritsen98@outlook.com
 """
 from kivy.clock import Clock
 from kivy.core.window import Window
@@ -20,12 +23,8 @@ import RPi.GPIO as GPIO
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 Window.fullscreen = "auto"
 
-
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(18,GPIO.IN)
-
 Data = []
-
 sound = SoundLoader.load('ding.mp3')
 
 class Global():
@@ -41,11 +40,7 @@ class MainWindow(Screen):
     def received(self, arg):
         if GPIO.input(18):
             #monitor pin for signal from feeder
-            GPIO.cleanup()
-            self.Next()
-    def Next(self, arg):
-        self.manager.current = 'second'
-        
+            self.manager.current = 'second'
 
 class SecondWindow(Screen):
     
@@ -91,7 +86,6 @@ class ThirdWindow(Screen):
         Clock.schedule_once(self.Next, 10)
         
     def Next(self, arg):
-        GPIO.cleanup()
         self.manager.current = 'main'
         Global.TrialNum += 1
         
