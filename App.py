@@ -34,9 +34,11 @@ class Global():
     
 
 class MainWindow(Screen):
+    # exicutes when you start the app
     def on_enter(self, args):
         GPIO.setup(18,GPIO.IN)
         Clock.schedule_interval(self.received)
+    # if you receive a signal from the raspberry pi will be called
     def received(self, arg):
         if GPIO.input(18):
             #monitor pin for signal from feeder
@@ -78,10 +80,11 @@ class SecondWindow(Screen):
 class ThirdWindow(Screen):
     def on_enter(self, **kwargs):
         #print(Global.TrialNum)
+        # send signal to the raspberry pi to let it know that the trial was completed
         if Global.feedback == True:
             GPIO.setup(18,GPIO.OUT)
             GPIO.output(18,GPIO.HIGH)
-            #send signal to feeder to feed
+
         Clock.schedule_once(compare, 2)
         Clock.schedule_once(self.Next, 10)
         
@@ -89,15 +92,7 @@ class ThirdWindow(Screen):
         self.manager.current = 'main'
         Global.TrialNum += 1
         
-        
-#class MainManager(ScreenManager):
-#    pass
-
 kv = Builder.load_file("my.kv")
-
-#MainManager.add_widget(MainWindow(name='main'))
-#MainManager.add_widget(SecondWindow(name='second'))
-#MainManager.add_widget(ThirdWindow(name='three'))
 
 class MyMainApp(App):
     def build(self):
