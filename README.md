@@ -3,9 +3,9 @@ Mouse Drawing App for [Narayanan's Lab](https://narayanan.lab.uiowa.edu/) at the
 
 # Dependences
 ### Python packages
-- Kivy
-- numpy
-- RPi.GPIO
+- [Kivy](https://kivy.org/doc/stable/gettingstarted/installation.html)
+- [numpy](https://numpy.org/install/)
+- [RPi.GPIO](https://pypi.org/project/RPi.GPIO/)
 ### Arduino
 - fed3 - [Install Instructions](https://github.com/KravitzLabDevices/FED3_library/wiki#installation-instructions)
 
