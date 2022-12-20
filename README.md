@@ -17,6 +17,6 @@ Mouse Drawing App for [Narayanan's Lab](https://narayanan.lab.uiowa.edu/) at the
 - BNC cable
 
 # Usage
-cd folder containing App.py and my.kv
-python App.py to run the app
-You can use esc to end the app/trial whenever
+cd folder containing App.py and my.kv  
+python App.py to run the app  
+You can use esc to end the app/trial whenever  
